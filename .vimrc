@@ -1,0 +1,103 @@
+" --- BASIC SETTINGS ---
+set nocompatible
+set number            " show line numbers
+set tabstop=4         " show tabs as 4 spaces wide
+set shiftwidth=4      " use 4 spaces when indenting
+set expandtab         " convert tabs to spaces
+set autoindent        " keep indent from previous line
+set smartindent       " auto-indent new line
+set cindent           " C/C++ aware indentation rules
+set cinoptions=:0,g0,(0,w1 " indentation rules for braces/labels
+set cinoptions+=h1
+set cinoptions+=N
+set indentkeys+=0{               " trigger indent on '{'
+set autoread
+set shellcmdflag=-lc
+set shellcmdflag=-lc
+
+
+autocmd FocusGained,BufEnter,CursorHold * checktime
+" Use 4 spaces for C and C++ files
+autocmd FileType c,cpp setlocal tabstop=4 shiftwidth=4 expandtab
+autocmd FileType java setlocal tabstop=2 shiftwidth=2 expandtab
+
+
+nnoremap <leader>m :w<CR>:!g++ -std=c++17 % -o %:r && ./%:r<CR>
+autocmd BufWritePre *.cpp,*.h,*.hpp,*.cc :silent! execute '!clang-format -i %'
+autocmd BufNewFile,BufRead *.cpp,*.hpp,*.cc setlocal filetype=cpp
+
+
+" --- RUST FORMAT ON SAVE ---
+autocmd FileType rust nnoremap <buffer> <leader>f :RustFmt<CR>
+
+" --- RUST COMMANDS ---
+nnoremap <leader>t :w<CR>:!cargo test<CR>
+nnoremap <leader>c :w<CR>:!cargo check<CR>
+
+" --- RUST.VIM SETTINGS ---
+let g:rust_recommended_style = 1
+let g:rustfmt_autosave = 0
+
+
+let g:coc_diagnostic_virtual_text = 0
+let g:ale_virtualtext = 0
+let g:ale_enabled = 0
+
+" --- FILETYPE-SPECIFIC INDENTATION ---
+filetype plugin indent on
+syntax on
+
+ 
+" --- BRACE BLOCK MAPPING ---
+" Type { then Enter → auto insert closing brace and indent cursor inside
+" If cursor is between {} then expand into block, else normal Enter
+augroup MyEnterMapping
+  autocmd!
+  autocmd VimEnter * inoremap <expr> <CR> (col('.') > 1 && getline('.')[col('.')-2] == '{' && getline('.')[col('.')-1] == '}')
+        \ ? "\<CR>\<Esc>O"
+        \ : (coc#pum#visible() ? coc#pum#confirm() : "\<CR>")
+augroup END
+" --- CURSOR SHAPE ---
+let &t_SI = "\e[6 q"   " Insert mode: steady vertical bar
+let &t_EI = "\e[6 q"   " Normal mode: steady block
+
+" --- CLIPBOARD YANKS ---
+nnoremap Y "+yy
+vnoremap y "+y
+nnoremap y "+y
+nnoremap <leader>r :w<CR>:!cargo run<CR>
+nnoremap <leader>b :w<CR>:!cargo build<CR>
+
+
+" --- COC POPUP BEHAVIOR ---
+" Enter confirms completion if popup visible, otherwise newline
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+
+" --- PLUGIN MANAGER (vim-plug) ---
+call plug#begin('~/.vim/plugged')
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc-java'
+Plug 'landersson/vim-blueberry' " Optional: class/function outline
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'dense-analysis/ale'
+Plug 'rust-lang/rust.vim'
+Plug 'simrat39/rust-tools.nvim'
+
+call plug#end()
+
+" --- RUST ANALYZER CONFIG ---
+let g:coc_global_extensions = [
+  \ 'coc-java',
+  \ 'coc-rust-analyzer'
+  \ ]
+
+
+
+" --- THEME ---
+colorscheme blueberry
+set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+
+" --- COMPLETION UX ---
+set completeopt=menu,menuone,noselect
+set shortmess+=c
