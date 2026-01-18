@@ -1,7 +1,7 @@
 " --- BASIC SETTINGS ---
 set nocompatible
 set number            " show line numbers
-set tabstop=4         " show tabs as 4 spaces wide
+set tabstop=4        " show tabs as 4 spaces wide
 set shiftwidth=4      " use 4 spaces when indenting
 set expandtab         " convert tabs to spaces
 set autoindent        " keep indent from previous line
@@ -22,8 +22,11 @@ autocmd FileType c,cpp setlocal tabstop=4 shiftwidth=4 expandtab
 autocmd FileType java setlocal tabstop=2 shiftwidth=2 expandtab
 
 
-vnoremap <C-c> :w !xclip -selection clipboard<CR><CR>
+vnoremap <C-c> :w !wl-copy<CR><CR>
+nnoremap <C-p> :r !wl-paste<CR><CR>
 
+vnoremap <C-c> :w !xclip -selection clipboard<CR><CR>
+nnoremap <C-p> :r !xclip -selection clipboard -o<CR><CR>
 
 
 nnoremap <leader>m :w<CR>:!g++ -std=c++17 % -o %:r && ./%:r<CR>
@@ -87,8 +90,11 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'dense-analysis/ale'
 Plug 'rust-lang/rust.vim'
 Plug 'simrat39/rust-tools.nvim'
+Plug 'preservim/nerdtree'
 
 call plug#end()
+
+nnoremap <leader>e :NERDTreeToggle<CR>
 
 " --- RUST ANALYZER CONFIG ---
 let g:coc_global_extensions = [
