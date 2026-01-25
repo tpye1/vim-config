@@ -45,7 +45,6 @@ nnoremap <leader>c :w<CR>:!cargo check<CR>
 let g:rust_recommended_style = 1
 let g:rustfmt_autosave = 0
 
-let g:NERDTreeWinPos = "right"
 
 let g:coc_diagnostic_virtual_text = 0
 let g:ale_virtualtext = 0
@@ -87,15 +86,19 @@ call plug#begin('~/.vim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neoclide/coc-java'
 Plug 'landersson/vim-blueberry' " Optional: class/function outline
+Plug 'ghifarit53/tokyonight-vim'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'dense-analysis/ale'
 Plug 'rust-lang/rust.vim'
 Plug 'simrat39/rust-tools.nvim'
 Plug 'preservim/nerdtree'
+Plug 'itchyny/lightline.vim'
+Plug 'tpope/vim-fugitive'
 
 call plug#end()
 
 nnoremap <leader>e :NERDTreeToggle<CR>
+
 
 set laststatus=2
 set noshowmode
@@ -111,16 +114,23 @@ let g:lightline = {
   \ }
   \ }
 
+" Disable Lightline in NERDTree
+autocmd FileType nerdtree let g:lightline = { 'active': { 'left': [ [] ] } }
+
+
+
 " --- RUST ANALYZER CONFIG ---
 let g:coc_global_extensions = [
   \ 'coc-java',
   \ 'coc-rust-analyzer'
   \ ]
 
-
+let g:NERDTreeWinPos = "right"
 
 " --- THEME ---
-colorscheme blueberry
+set termguicolors
+"colorscheme blueberry
+colorscheme tokyonight
 set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
 
 " --- COMPLETION UX ---
