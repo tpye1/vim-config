@@ -97,6 +97,20 @@ call plug#end()
 
 nnoremap <leader>e :NERDTreeToggle<CR>
 
+set laststatus=2
+set noshowmode
+
+let g:lightline = {
+  \ 'colorscheme': 'default',
+  \ 'component_function': {
+  \   'gitbranch': 'FugitiveHead'
+  \ },
+  \ 'active': {
+  \   'left': [ [ 'mode', 'paste' ],
+  \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+  \ }
+  \ }
+
 " --- RUST ANALYZER CONFIG ---
 let g:coc_global_extensions = [
   \ 'coc-java',
