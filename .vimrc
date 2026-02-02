@@ -67,6 +67,8 @@ nnoremap <leader>b :w<CR>:!cargo build<CR>
 " Enter confirms completion if popup visible, otherwise newline
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
 
+"inoremap <silent><expr> <Tab> coc#pum#visible() ? coc#pum#confirm() : "\<Tab>"
+
 " --- PLUGIN MANAGER (vim-plug) ---
 call plug#begin('~/.vim/plugged')
 
@@ -74,21 +76,22 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neoclide/coc-java'
 Plug 'landersson/vim-blueberry' " Optional: class/function outline
 Plug 'ghifarit53/tokyonight-vim'
+Plug 'joshdick/onedark.vim'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'dense-analysis/ale'
 Plug 'preservim/nerdtree'
-Plug 'itchyny/lightline.vim'
-Plug 'tpope/vim-fugitive'
+"Plug 'itchyny/lightline.vim'
+"Plug 'tpope/vim-fugitive'
 
 call plug#end()
 
 nnoremap <leader>e :NERDTreeToggle<CR>
 
 
-set laststatus=2
-set noshowmode
+"set laststatus=2
+"set noshowmode
 
-let g:lightline = {
+"let g:lightline = {
   \ 'colorscheme': 'default',
   \ 'component_function': {
   \   'gitbranch': 'FugitiveHead'
@@ -100,11 +103,10 @@ let g:lightline = {
   \ }
 
 " Disable Lightline in NERDTree
-autocmd FileType nerdtree let g:lightline = { 'active': { 'left': [ [] ] } }
+" autocmd FileType nerdtree let g:lightline = { 'active': { 'left': [ [] ] } }
 
 
 
-" --- RUST ANALYZER CONFIG ---
 let g:coc_global_extensions = [
   \ 'coc-java'
   \ ]
@@ -112,9 +114,10 @@ let g:coc_global_extensions = [
 let g:NERDTreeWinPos = "right"
 
 " --- THEME ---
+"colorscheme onedark
 set termguicolors
-"colorscheme blueberry
-colorscheme tokyonight
+colorscheme blueberry
+"colorscheme tokyonight
 set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
 
 " --- COMPLETION UX ---
