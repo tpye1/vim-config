@@ -19,14 +19,12 @@ set shellcmdflag=-lc
 autocmd FocusGained,BufEnter,CursorHold * checktime
 " Use 4 spaces for C and C++ files
 autocmd FileType c,cpp setlocal tabstop=4 shiftwidth=4 expandtab
-autocmd FileType java setlocal tabstop=4 shiftwidth=4 expandtab
+autocmd FileType java setlocal tabstop=2 shiftwidth=2 expandtab
 
 
+" --- WAYLAND CLIPBOARD ---
 vnoremap <C-c> :w !wl-copy<CR><CR>
 nnoremap <C-p> :r !wl-paste<CR><CR>
-
-vnoremap <C-c> :w !xclip -selection clipboard<CR><CR>
-nnoremap <C-p> :r !xclip -selection clipboard -o<CR><CR>
 
 
 nnoremap <leader>m :w<CR>:!g++ -std=c++17 % -o %:r && ./%:r<CR>
