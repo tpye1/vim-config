@@ -109,7 +109,7 @@ let g:coc_global_extensions = [
   \ 'coc-java'
   \ ]
 
-let g:NERDTreeWinPos = "right"
+let g:NERDTreeWinPos = "left"
 
 " --- THEME ---
 "colorscheme onedark
